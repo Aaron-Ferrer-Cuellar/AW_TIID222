@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .CV-Encabezado{
+            background-color: gray;
+
+            display: flex;
+            flex-direction: row;
+
+            width: auto;
+            height: auto;
+        }
+        .foto{
+            width: 14.5%;
+            height: auto;
+        }
+        .Foto-Perfil{
+            padding: 20px;
+            border-radius: 100%;
+
+            width: 180px;
+            height: 180px;
+        }
+        .Informacion-Personal{
+            width: 85.5%;
+            height: auto;
+            text-align: center;
+            padding-right: 200px;
+        }
+        .Info-1{
+            font-size: 47px;
+        }
+        .Info-2{
+            font-size: 37px;
+        }
+        .contenido{
+            display: grid;
+            grid-template-columns: 14.5% 85.5%;
+        }
+        .columna-izquierda{
+            background-color: rgb(149, 255, 227);
+        }
+        .columna-derecha{
+            background-color: rgb(192, 192, 255);
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div class="Cv">
+
+        <header class="CV-Encabezado">
+            <div class="foto">
+                <img src="MotoMoto.jpg" class="Foto-Perfil" alt="">
+            </div>
+            <div class="Informacion-Personal">
+                <h2 class="Info-1"><b>Aaron Ferrer Cuellar</b></h2>
+                <h3 class="Info-2">Ingeniero en Sistemas Computacionales</h3>
+            </div>
+        </header>
+
+        <div class="contenido">
+
+            <div class="columna-izquierda">
+               
+                <div class="Contacto">
+                    <h4>CONTACTO</h4>
+                    <ul>
+                        <li>(52 448 125 1038)</li>
+                        <li>hola@sitioincreible.com</li>
+                        <li>www.sitioincreible.com</li>
+                    </ul>
+                </div>
+                <div class="Habilidades">
+                    <h4>HABILIDADES</h4>
+                    <ul>
+                        <li>Liderazgo</li>
+                        <li>comunicacion asertiva</li>
+                        <li>Gestion de activos</li>
+                        <li>resolucion de problemas</li>
+                        <li>Elaboracion de reportes</li>
+                        <li>Trabajo en equipo</li>
+                    </ul>
+                </div>
+                <div class="Educacion">
+                    <h4>EDUCACION</h4>
+                    <ul>
+                        <li><strong>Licenciatura en contabilidad</strong></li>
+                        <p>universidad Alta Pinta</p>
+                        2010 - 2014
+                    </ul>
+                    <ul>
+                        <li><strong>Diplomado en finanzas</strong></li>
+                        <p>universidad Alta Pinta</p>
+                        2010 - 2014
+                    </ul>
+                </div>
+
+            </div>
+            <div class="columna-derecha">
+                <section>
+                    <h4>ACERCA DE MI</h4>
+                    <p style="text-align: justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam quo id velit nisi ex incidunt laudantium quae dignissimos dolores beatae temporibus, delectus architecto sequi, iste iure eaque placeat deleniti neque!</p>
+                </section>
+                <section>
+                    <h4>EXPERIENCIA LABORAL</h4>
+                    
+                </section>
+            </div>
+
+        </div>
+
+    </div>
+    
+</body>
+</html>
