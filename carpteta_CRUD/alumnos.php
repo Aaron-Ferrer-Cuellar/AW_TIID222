@@ -32,23 +32,50 @@ $query = mysqli_query($con, $sql);
 <body>
 
     <table style="border: solid black 2px">
-        <tr>
-            <th>Matricula</th>
-            <th>Nombre</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>Edad</th>
-        </tr>
-        <tr>
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        
+        <tbody>
 
-        </tr>
-        <tr>
+            <?php
+                while ($row = mysqli_fetch_array($query)){
+            ?>
+            <tr>
+                <td><?php echo $row['Matricula'] ?></td>
+                <td><?php echo $row['nombre'] ?></td>
+                <td><?php echo $row['apellido_p'] ?></td>
+                <td><?php echo $row['apellido_m'] ?></td>
+                <td><?php echo $row['edad'] ?></td>
+            </tr>
+            <?php
+            }
+            ?>
 
-        </tr>
-        <tr>
+        </tbody>
 
-        </tr>
     </table>
+
+    <h1>Formulario</h1>
+    <form action="Insertar.php" method="post">
+
+        <div style="display: flex; gap:10px;">
+            <input type="text" class="form-control" name="Matricula" placeholder="Matricula">
+            <input type="text" class="form-control" name="nombre" placeholder="nombre">
+            <input type="text" class="form-control" name="apellido_p" placeholder="Apellido paterno">
+            <input type="text" class="form-control" name="apellido_m" placeholder="Apellido Materno">
+            <input type="text" class="form-control" name="edad" placeholder="Edad">
+
+            <input type="submit">
+        </div>
+
+    </form>
     
 </body>
 </html>
