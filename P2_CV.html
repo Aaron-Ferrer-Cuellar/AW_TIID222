@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #ffffff;
+        }
+
+        .Cv {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ENCABEZADO */
+        .CV-Encabezado {
+            background-color: #cdd7e5; /* Color gris azulado de la imagen */
+            display: flex;
+            align-items: center;
+            padding: 40px 80px;
+            width: 100%;
+        }
+
+        .foto {
+            width: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .Foto-Perfil {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .Informacion-Personal {
+            flex: 1;
+            padding-left: 50px;
+        }
+
+        .Info-1 {
+            font-size: 52px;
+            color: #1a2b49;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .Info-2 {
+            font-size: 20px;
+            color: #1a2b49;
+            letter-spacing: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .contenido {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* COLUMNA IZQUIERDA */
+        .columna-izquierda {
+            background-color: #eef4fb; /* Color azul muy claro */
+            padding: 40px 30px;
+        }
+
+        .seccion-izq {
+            margin-bottom: 35px;
+        }
+
+        .titulo-seccion {
+            font-size: 18px;
+            color: #1a2b49;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .linea {
+            height: 3px;
+            background-color: #1a2b49;
+            width: 40px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos de Contacto */
+        .Contacto ul {
+            list-style: none;
+        }
+
+        .Contacto li {
+            font-size: 14px;
+            color: #333333;
+            margin-bottom: 12px;
+            word-break: break-word;
+        }
+
+        /* Estilos de Habilidades */
+        .Habilidades ul {
+            padding-left: 18px;
+        }
+
+        .Habilidades li {
+            font-size: 14px;
+            color: #333333;
+            margin-bottom: 8px;
+        }
+
+        /* Estilos de Educación */
+        .Educacion-item {
+            margin-bottom: 18px;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .Educacion-item ul {
+            padding-left: 18px;
+        }
+
+        .Educacion-item strong {
+            display: block;
+            color: #000000;
+            margin-bottom: 3px;
+        }
+
+        .Educacion-item p {
+            margin-top: 2px;
+            color: #555555;
+        }
+
+        /* COLUMNA DERECHA */
+        .columna-derecha {
+            background-color: #ffffff;
+            padding: 40px 60px;
+        }
+
+        .seccion-der {
+            margin-bottom: 35px;
+        }
+
+        .seccion-der p {
+            font-size: 15px;
+            color: #444444;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        /* Experiencia Laboral */
+        .experiencia-item {
+            margin-bottom: 25px;
+        }
+
+        .experiencia-item ul {
+            padding-left: 18px;
+        }
+
+        .experiencia-item h5 {
+            font-size: 16px;
+            color: #000000;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .experiencia-item .empresa-fecha {
+            font-size: 14px;
+            color: #555555;
+            margin: 4px 0 8px 0;
+        }
+
+        .experiencia-item p {
+            font-size: 14px;
+            color: #444444;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="Cv">
+
+        <!-- ENCABEZADO -->
+        <header class="CV-Encabezado">
+            <div class="foto">
+                <img src="MotoMoto.jpg" class="Foto-Perfil" alt="Foto de perfil">
+            </div>
+            <div class="Informacion-Personal">
+                <h1 class="Info-1">Aaron Ferrer Cuellar</h1>
+                <h3 class="Info-2">Ingeniero en Sistemas Computacionales</h3>
+            </div>
+        </header>
+
+        <!-- CONTENIDO -->
+        <div class="contenido">
+
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="columna-izquierda">
+                
+                <div class="seccion-izq Contacto">
+                    <h4 class="titulo-seccion">CONTACTO</h4>
+                    <div class="linea"></div>
+                    <ul>
+                        <li>(52 448 125 1038)</li>
+                        <li>hola@sitioincreible.com</li>
+                        <li>www.sitioincreible.com</li>
+                    </ul>
+                </div>
+
+                <div class="seccion-izq Habilidades">
+                    <h4 class="titulo-seccion">HABILIDADES</h4>
+                    <div class="linea"></div>
+                    <ul>
+                        <li>Liderazgo</li>
+                        <li>Comunicación asertiva</li>
+                        <li>Gestión de activos</li>
+                        <li>Resolución de problemas</li>
+                        <li>Elaboración de reportes</li>
+                        <li>Trabajo en equipo</li>
+                    </ul>
+                </div>
+
+                <div class="seccion-izq Educacion">
+                    <h4 class="titulo-seccion">EDUCACIÓN</h4>
+                    <div class="linea"></div>
+                    
+                    <div class="Educacion-item">
+                        <ul>
+                            <li><strong>Licenciatura en Contabilidad</strong></li>
+                        </ul>
+                        <p>Universidad Alta Pinta</p>
+                        <p>2010 - 2014</p>
+                    </div>
+
+                    <div class="Educacion-item">
+                        <ul>
+                            <li><strong>Diplomado en Finanzas</strong></li>
+                        </ul>
+                        <p>Universidad Alta Pinta</p>
+                        <p>2014 - 2016</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA -->
+            <div class="columna-derecha">
+                
+                <section class="seccion-der">
+                    <h4 class="titulo-seccion">ACERCA DE MÍ</h4>
+                    <div class="linea"></div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla facilisi morbi tempus iaculis urna id volutpat lacus.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+                </section>
+
+                <section class="seccion-der">
+                    <h4 class="titulo-seccion">EXPERIENCIA LABORAL</h4>
+                    <div class="linea"></div>
+                    
+                    <div class="experiencia-item">
+                        <ul>
+                            <li><h5>ÁREA DE CONTABILIDAD</h5></li>
+                        </ul>
+                        <p class="empresa-fecha">Empresa Borcelle<br>2010-2012</p>
+                        <p>Eu augue ut lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem dolor sed viverra ipsum nunc.</p>
+                    </div>
+
+                    <div class="experiencia-item">
+                        <ul>
+                            <li><h5>ÁREA DE CONTABILIDAD</h5></li>
+                        </ul>
+                        <p class="empresa-fecha">Empresa Borcelle<br>2012-2014</p>
+                        <p>Eu augue ut lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem dolor sed viverra ipsum nunc.</p>
+                    </div>
+
+                    <div class="experiencia-item">
+                        <ul>
+                            <li><h5>ÁREA DE CONTABILIDAD</h5></li>
+                        </ul>
+                        <p class="empresa-fecha">Empresa Borcelle<br>2014-2016</p>
+                        <p>Eu augue ut lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem dolor sed viverra ipsum nunc.</p>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
