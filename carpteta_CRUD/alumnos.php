@@ -39,6 +39,8 @@ $query = mysqli_query($con, $sql);
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
                 <th>Edad</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         
@@ -53,6 +55,13 @@ $query = mysqli_query($con, $sql);
                 <td><?php echo $row['apellido_p'] ?></td>
                 <td><?php echo $row['apellido_m'] ?></td>
                 <td><?php echo $row['edad'] ?></td>
+
+                <td>
+                    <a href="editar.php?id=<?php echo $row['Matricula']; ?>">Editar</a>
+                </td>
+                <td>
+                    <a href="eliminar.php?id=<?php echo $row['Matricula']; ?>">Eliminar</a>
+                </td>
             </tr>
             <?php
             }
