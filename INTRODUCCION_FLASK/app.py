@@ -1,37 +1,34 @@
-# Importamos la libreria de Flask
-from flask import Flask, redirect, render_template, request, url_for, session
+#Importamos librería de flask
+from flask import Flask,render_template, redirect, request, url_for,session
 
-# Importamos la libreria de MYSQL para Flask
+#Importamos la librería de MySQL para flask
 from flask_mysqldb import MySQL
 
-# Importamos librerias para generar y comprobar un hash
+#Importamos librerias para generar un hash y para comprobar que el hash coincida con la contraseña
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Creamos una instancia del proyecto
-app = Flask(__name__)
+#Creamos unas instancias del proyecto
+app= Flask(__name__)
 
-# Permite cargar las vistas cuando se modifican
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+#Permite cargar las vistas cuando se modifican
+app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-# Configuracion de la conexion
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'dbflask'
+#Configuración de la conexión
+app.config['MYSQL_HOST']= 'localhost'
+app.config['MYSQL_USER']= 'root'
+app.config['MYSQL_PASSWORD']= ''
+app.config['MYSQL_DB']= 'dbflask'
+app.secret_key='mysecretkey'
+mysql=MySQL(app)
 
-app.secret_key = 'mysecretkey'
-
-mysql = MySQL(app)
-
-
-# Ruta principal
+#Creamos rutas
 @app.route("/")
+#funcion que se llama home
 def home():
+    #retornar mensaje
     return render_template("login.html")
 
-
-# REGISTRO DE USUARIOS
+#Creamos ruta de registro
 @app.route("/registro", methods=["GET", "POST"])
 def registro():
 
@@ -41,119 +38,104 @@ def registro():
         apellido_p = request.form["apellido_p"]
         apellido_m = request.form["apellido_m"]
         correo = request.form["correo"]
-        password = request.form["password"]  # Corregido para leer el input "password" del formulario
+        password = request.form["password"]
         id_rol = request.form["id_rol"]
 
-        # Generar el hash de la contrasena
         password_hash = generate_password_hash(password)
 
-        cursor = None
+        cursor = mysql.connection.cursor()
 
-        try:
-            cursor = mysql.connection.cursor()
+        cursor.execute(
+            "SELECT id FROM usuarios WHERE correo = %s",
+            (correo,)
+        )
 
-            # Comprobar si el correo ya existe
-            cursor.execute(
-                "SELECT id FROM usuarios WHERE correo = %s",
-                (correo,)
+        if cursor.fetchone():
+            cursor.close()
+            return render_template("registro.html")
+
+        cursor.execute(
+            """
+            INSERT INTO usuarios
+            (nombre, apellido_p, apellido_m,
+             correo, password_hash, id_rol)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (
+                nombre,
+                apellido_p,
+                apellido_m,
+                correo,
+                password_hash,
+                id_rol
             )
+        )
 
-            if cursor.fetchone():
-                return render_template(
-                    "registro.html",
-                    mensaje="Este correo ya se encuentra registrado."
-                )
+        mysql.connection.commit()
+        cursor.close()
 
-            # Insertar el usuario en la base de datos (usando password_hash que sí existe en la tabla)
-            cursor.execute(
-                """
-                INSERT INTO usuarios
-                (nombre, apellido_p, apellido_m, correo, password_hash, id_rol)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    nombre,
-                    apellido_p,
-                    apellido_m,
-                    correo,
-                    password_hash,
-                    id_rol
-                )
-            )
-
-            return redirect(url_for("home"))
-
-        except Exception:
-            mysql.connection.rollback()
-            app.logger.exception("Error al registrar el usuario")
-
-            return render_template(
-                "registro.html",
-                mensaje="Ocurrio un error al registrar el usuario."
-            )
-
-        finally:
-            if cursor is not None:
-                mysql.connection.commit()
-                cursor.close()
+        return redirect(url_for("home"))
 
     return render_template("registro.html")
 
-# Ruta de login para el inicio de sesion
-@app.route("/login", methods=["GET", "POST"])  # Corregido "method" por "methods"
+#Ruta de login para el inicio de sesión
+@app.route("/login", methods=["GET", "POST"])
 def login():
-
-    # verificar si se enviaron los datos del formulario
-    if request.method == "POST":
-
-        correo = request.form["correo"]
-        password = request.form["password"]
-
-        # crear un cursor para ejecutar las consultas SQL
-        cursor = mysql.connection.cursor()
-
-        # Consultar SQL
-        sql = """
-            SELECT
-            usuarios.id,
-            usuarios.nombre,
-            usuarios.apellido_p,
-            usuarios.apellido_m,
-            usuarios.correo,
-            usuarios.password_hash,
-            roles.nombre
-            FROM usuarios
-            INNER JOIN roles
-            ON usuarios.id_rol = roles.id_rol
-            WHERE usuarios.correo = %s
-        """
-
-        #Vamos a ejecutar la consulta pasandole como parametro el correo
+    #verificar si se enviaron los datos del formulario
+    if request.method =="POST":
+        correo= request.form["correo"]
+        password= request.form["password_hash"]
+        #Crear un cursos para ejecutar las consultas SQL
+        cursor=mysql.connection.cursor()
+        #Consultar sql
+        sql="""
+            SELECT usuarios.id, usuarios.nombre, usuarios.apellido_p, usuarios.apellido_m,
+                usuarios.correo, usuarios.password_hash, roles.nombre from usuarios 
+                inner join roles on usuarios.id_rol=roles.id_rol 
+                where usuarios.correo =%s 
+            """
+        #ejecutamos la consulta utilizando el parámtero del correo
         cursor.execute(sql, (correo,))
-        #Recuperar el primer registro encontrado
-        usuario = cursor.fetchone()
-        # Cerramos el cursor
+        #Recuperamos el primer registro encontrado
+        usuario=cursor.fetchone()
+        #cerramos el cursor
         cursor.close()
-
-        # vamos a comparar la contrasena con el hash generado anteriormente al registar el 
+        #vamos a comprara la contraseña con el hash generado anteriormente al regitro en el BD
         if usuario and check_password_hash(usuario[5], password):
-
-            session["id_usuario"] = usuario[0]
-            session["nombre"] = usuario[1]
-            session["rol"] = usuario[6]
-
-            if session["rol"] == "Administrador":
-                return redirect(url_for("administrador.html"))
-            
-            return redirect(url_for("usuarios.html"))
-        
-        return render_template("login.html", 
-                               error = "Correo o contrasena incorrecta")
-
-
+            session["id_usuario"]=usuario[0]
+            session["nombre"]= usuario[1]
+            session["rol"]= usuario[6]
+            if session["rol"]=="administrador":
+                return redirect(url_for("admin"))
+            return redirect(url_for("usuario"))
+        return render_template("login.html", error="Correo o contraseña incorrectos")
+    # Direccion de la ruta /login
     return render_template("login.html")
+    
+#ruta de administrador
+@app.route("/admin")
+def admin():
+    if "id_usuario" not in session:
+        return redirect(url_for("login"))
+    if session.get("rol") != "administrador":
+        return "Acceso denegado"
+    return render_template("administrador.html", nombre=session["nombre"])
 
+#ruta de logout
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 
-# Ejecutar el proyecto en el puerto 5000
+#ruta de usuario
+@app.route("/usuario")
+def usuario():
+    if "id_usuario" not in session:
+        return redirect(url_for("login"))
+    if session.get("rol") != "usuario":
+        return "Acceso denegado"
+    return render_template("usuarios.html", nombre=session["nombre"])
+
+#Ejecutamos el proyecto en el puerto 5000
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5000)
